@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Button } from "react-bootstrap";
 import { IoIosArrowBack } from "react-icons/io";
 
 export default function Question({ gameActive, setGameActive, category }) {
-  const [listQuestions, setListQuestions] = useState([]);
-  const [currentQuestion, setQuestion] = useState(defaultQ);
   const defaultQ = "How are you doing today? :)";
+
+  const [questionBank, setQuestionBank] = useState([]);
+  const [currentQuestion, setQuestion] = useState(defaultQ);
   const [boxQ, setBoxQ] = useState("Next Question");
 
   const blueColor = "#324067";
@@ -19,25 +20,29 @@ export default function Question({ gameActive, setGameActive, category }) {
     bgColor = redColor;
   }
 
-  function GetList(category) {
-    const API_GET_QUESTIONS =
-      "https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/application-0-jonbw/service/api_partyquestion/incoming_webhook/get_questions";
-    let url = API_GET_QUESTIONS + "?arg=" + category;
+  useEffect(() => {
+    async function GetList(category) {
+      const API_GET_QUESTIONS =
+        "https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/application-0-jonbw/service/api_partyquestion/incoming_webhook/get_questions";
+      let url = API_GET_QUESTIONS + "?arg=" + category;
 
-    return fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setListQuestions(data);
-        return data;
-      });
-  }
+      return await fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setQuestionBank(data);
+          return data;
+        });
+    }
+    setQuestionBank(GetList(category));
+  }, [category]);
 
   function NextQuestion() {
-    var randInt = ~~(Math.random() * listQuestions.length);
-    // if (currentQuestion != defaultQ) {
-    setQuestion(listQuestions[randInt]["question"]);
-    console.log(currentQuestion);
-    // }
+    var randInt = ~~(Math.random() * questionBank.length);
+
+    console.log("currQ", currentQuestion);
+    console.log("list", questionBank);
+
+    setQuestion(questionBank[randInt]["question"]);
   }
 
   return (
