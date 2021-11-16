@@ -16,25 +16,23 @@ export default function Home() {
   const blueColor = "#324067";
   const redColor = "#750D37";
 
-  useEffect(() => {
-    document.onkeyup = function (event) {
-      if (event.which == 32 || event.keyCode == 32) {
-        NextQuestion();
-      } else if (event.which == 27 || event.keyCode == 27) {
-        setDefaultDiv(true);
-      }
-    };
-  });
+  // useEffect(() => {
+  //   document.onkeyup = function (event) {
+  //     if (event.which == 32 || event.keyCode == 32) {
+  //       NextQuestion();
+  //     } else if (event.which == 27 || event.keyCode == 27) {
+  //       setDefaultDiv(true);
+  //     }
+  //   };
+  // });
 
   function StartGame() {
     let category = "";
 
     GetList(category);
-    NextQuestion();
-  }
-
-  function StartGame() {
     setDefaultDiv(false);
+
+    NextQuestion();
   }
 
   return (
