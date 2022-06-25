@@ -37,7 +37,7 @@ export default function Question({ gameActive, setGameActive, category }) {
         setQuestionBank(data);
         return data;
       });
-  }, [category, currentQuestion, questionBank]);
+  }, [category, currentQuestion, questionBank, setGameActive]);
 
   function NextQuestion() {
     var randInt = ~~(Math.random() * questionBank.length);
