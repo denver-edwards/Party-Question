@@ -1,78 +1,59 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
 import { IoIosArrowBack } from "react-icons/io";
+import Button from "./Button.js";
 
 export default function Setup({ gameActive, setGameActive, setCategory }) {
-  const [generalVariant, setGeneralVariant] = useState("primary");
-  const [adultVariant, setAdultVariant] = useState("outline-danger");
+  const [selected, setSelected] = useState("general");
 
-  const [bgColor, setBgColor] = useState("#324067");
-
-  const blueColor = "#324067";
-  const redColor = "#750D37";
-  const [leftBtnColor, setLeftBtn] = useState(blueColor);
-  const [rightBtnColor, setRightBtn] = useState("white");
-
-  function HandleGeneralClick() {
-    if (generalVariant == "primary") {
-      // (General is clicked) Adult is selected
-      setGeneralVariant("outline-primary");
-      setAdultVariant("danger");
-      setBgColor(redColor);
-      setLeftBtn("white");
-      setRightBtn(redColor);
-    } else {
-      // (Adult is clicked) General is selected
-      setGeneralVariant("primary");
-      setAdultVariant("outline-danger");
-      setBgColor(blueColor);
-      setLeftBtn(blueColor);
-      setRightBtn("white");
-    }
+  function HandleClick(category) {
+    setSelected(category);
   }
 
   function StartGame() {
-    if (generalVariant == "primary") {
-      setCategory("general");
-    } else {
-      setCategory("adult");
-    }
-
+    setCategory(selected);
     setGameActive(true);
   }
 
   return (
     <>
-      <div style={{ backgroundColor: bgColor, height: "100vh" }}>
-        <div className="jumbotron-box">
+      <div
+        className={
+          "h-screen flex items-center" +
+          (selected == "general"
+            ? " bg-general transition ease-in-out delay-100"
+            : " bg-adult transition ease-in-out delay-100")
+        }
+      >
+        <div className="jumbotron-box mx-auto">
           <h1>Pick a category</h1>
           <div className="button-group">
-            <Button
-              variant={generalVariant}
-              onClick={HandleGeneralClick}
-              style={{ backgroundColor: leftBtnColor }}
+            <button
+              className={
+                selected == "general"
+                  ? " bg-general text-white"
+                  : " hover:bg-general transition ease-in-out delay-100 border border-2 border-general text-general hover:text-white"
+              }
+              onClick={() => HandleClick("general")}
             >
               General
-            </Button>
-            <Button
-              variant={adultVariant}
-              onClick={HandleGeneralClick}
-              style={{
-                backgroundColor: rightBtnColor,
-              }}
+            </button>
+            <button
+              className={
+                selected == "adult"
+                  ? " bg-adult text-white"
+                  : " hover:bg-adult transition ease-in-out delay-100 border border-2 border-adult text-adult hover:text-white"
+              }
+              onClick={() => HandleClick("adult")}
             >
               Adult [18+]
-            </Button>
+            </button>
           </div>
-          <Button
-            className="start-button"
-            variant="success"
-            size="lg"
-            block
-            onClick={StartGame}
+          <button
+            className="bg-green-400 start-button"
+            onClick={() => StartGame()}
           >
             Start
-          </Button>
+          </button>
         </div>
       </div>
     </>

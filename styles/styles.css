@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Varela Round", sans-serif;
+  }
+  button {
+    @apply px-4 py-2 rounded-3xl;
+  }
+}
+
+@layer components {
+  .jumbotron-box {
+    height: 85%;
+    width: 85%;
+    background-color: white;
+    border-radius: 80px;
+    text-align: center;
+  }
+  .button-group {
+    position: relative;
+    top: 50px;
+  }
+
+  .start-button {
+    position: relative;
+    top: 100px;
+  }
+
+  .next-question-btn {
+    position: relative;
+    top: 105px;
+  }
+
+  .back-arrow-icon {
+    position: absolute;
+    left: 50px;
+  }
+
+  .question-text {
+  }
+
+  .snap-box {
+    @apply w-full h-screen snap-start;
+  }
+}
+
+.first {
+  /* @apply bg-gradient-to-r from-red-200 via-red-300 to-yellow-200; */
+  background-image: linear-gradient(
+    to bottom,
+    #624d7f,
+    #7c497f,
+    #954477,
+    #aa3f69,
+    #ba3f56,
+    #c45056,
+    #cd6257,
+    #d57359,
+    #e19076,
+    #edac95,
+    #f6c9b7,
+    #ffe5da
+  );
+}
+.second {
+}
+.third {
+}
+.fourth {
+}
+.custom-shape-divider-bottom-1651106587 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1651106587 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 132px;
+}
+
+.custom-shape-divider-bottom-1651106587 .shape-fill {
+  fill: #ffffff;
+}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-
-import { Button } from "react-bootstrap";
 import { IoIosArrowBack } from "react-icons/io";
+import Button from "./Button.js";
 
 export default function Question({ gameActive, setGameActive, category }) {
   const defaultQ = "How are you doing today? :)";
@@ -9,16 +8,6 @@ export default function Question({ gameActive, setGameActive, category }) {
   const [questionBank, setQuestionBank] = useState([]);
   const [currentQuestion, setQuestion] = useState(defaultQ);
   const [boxQ, setBoxQ] = useState("Next Question");
-
-  const blueColor = "#324067";
-  const redColor = "#750D37";
-  let bgColor = "";
-
-  if (category == "general") {
-    bgColor = blueColor;
-  } else {
-    bgColor = redColor;
-  }
 
   useEffect(() => {
     function NQ() {
@@ -34,23 +23,20 @@ export default function Question({ gameActive, setGameActive, category }) {
       if (event.which == 32 || event.keyCode == 32) {
         NQ();
       } else if (event.which == 27 || event.keyCode == 27) {
-        setDefaultDiv(true);
+        setGameActive(false);
       }
     };
 
-    async function GetList(category) {
-      const API_GET_QUESTIONS =
-        "https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/application-0-jonbw/service/api_partyquestion/incoming_webhook/get_questions";
-      let url = API_GET_QUESTIONS + "?arg=" + category;
+    const API_GET_QUESTIONS =
+      "https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/application-0-jonbw/service/api_partyquestion/incoming_webhook/get_questions";
+    let url = API_GET_QUESTIONS + "?arg=" + category;
 
-      return await fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          setQuestionBank(data);
-          return data;
-        });
-    }
-    setQuestionBank(GetList(category));
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setQuestionBank(data);
+        return data;
+      });
   }, [category, currentQuestion, questionBank]);
 
   function NextQuestion() {
@@ -64,20 +50,33 @@ export default function Question({ gameActive, setGameActive, category }) {
 
   return (
     <>
-      <div style={{ backgroundColor: bgColor, minHeight: "100vh" }}>
-        <div className="jumbotron-box">
+      <div
+        className={
+          "h-screen flex items-center " +
+          (category == "adult" ? "bg-adult" : "bg-general")
+        }
+      >
+        <div className="jumbotron-box mx-auto">
           <a
             className="back-arrow-icon"
             onClick={() => {
               setGameActive(false);
             }}
           >
-            <IoIosArrowBack size={50} />
+            <IoIosArrowBack
+              size={50}
+              className={
+                "opacity-50 ml-12 mt-4" +
+                (category == "adult" ? " text-adult" : " text-general")
+              }
+            />
           </a>
+
           <h2 className="question-text">{currentQuestion}</h2>
-          <Button className="next-question-btn" onClick={NextQuestion}>
+
+          <button className="next-question-btn" onClick={() => NextQuestion()}>
             {boxQ}
-          </Button>
+          </button>
         </div>
       </div>
     </>
