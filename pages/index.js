@@ -19,7 +19,7 @@ export default function Home() {
             width={180}
             onClick={() => {}}
           />
-          <p className="text-sm text-gray-500">(Try it now. It's free!)</p>
+          <p className="text-sm text-gray-500">(Try it now. It&apos;s free!)</p>
         </div>
 
         <div class="custom-shape-divider-bottom-1651106587">
